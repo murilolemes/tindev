@@ -21,21 +21,21 @@ module.exports = {
     async store(req , res) {
         const { username } = req.body;
 
-        const userName = username.toLowerCase();
+        const userLower = username.toLowerCase();
 
-        const userExists = await Dev.findOne({ user: userName });
+        const userExists = await Dev.findOne({ user: userLower });
 
         if (userExists) {
             return res.json(userExists);
         }
 
-        const response = await axios.get(`https://api.github.com/users/${userName}`);
+        const response = await axios.get(`https://api.github.com/users/${userLower}`);
         
         const { name , bio , avatar_url: avatar } = response.data;
 
         const dev = await Dev.create({
             name,
-            user: userName,
+            user: userLower,
             bio,
             avatar
         });

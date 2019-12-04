@@ -1,13 +1,26 @@
-import React from 'react';
-import { KeyboardAvoidingView, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 
 import logo from '../assets/logo.png'
-import { Platform } from '@unimodules/core';
+import api from '../services/api';
 
-export default function Login() {
+export default function Login({ navigation }) {
+    const [user, setUser] = useState('')
+
+    async function handleLogin() {
+        const response = await api.post('/devs', { username: user });
+        
+        console.log(response);
+        
+        // const { _id } = response.data;
+
+        // console.log(_id);
+        navigation.navigate('Main');
+    }
+
     return ( 
-        <KeyboardAvoidingView 
-            behavior="padding"
+        <KeyboardAvoidingView
+            behavior="padding" 
             enabled={Platform.OS === 'ios'}
             style={styles.container}
         >
@@ -19,9 +32,11 @@ export default function Login() {
                 placeholder="Digite seu usuário no Github"
                 placeholderTextColor="#999"
                 style={styles.input}
+                value={user}
+                onChangeText={setUser}
             />
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity onPress={handleLogin} style={styles.button}>
                 <Text style={styles.buttonText}>Enviar</Text>
             </TouchableOpacity>
         </KeyboardAvoidingView>

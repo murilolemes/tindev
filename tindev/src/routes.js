@@ -1,4 +1,3 @@
-// import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import Login from './pages/login';
@@ -10,9 +9,3 @@ export default createAppContainer(
     Main
   })
 )
-
-// export default function App() {
-//   return (
-//     <Login />
-//   );
-// }
